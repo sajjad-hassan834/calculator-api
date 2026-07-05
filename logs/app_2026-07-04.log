@@ -1,0 +1,22 @@
+2026-07-04 22:45:48.021 | INFO    | app.core.logging:setup_logging:50 | Logging configured
+2026-07-04 22:45:48.023 | INFO    | app.main:lifespan:25 | Starting FinanceCalculator API v1.0.0 in development mode
+2026-07-04 22:45:48.024 | WARNING | app.main:lifespan:27 | Running in development mode
+2026-07-04 22:46:00.771 | INFO    | app.middleware.logging:dispatch:16 | Request started | GET /docs | id=2cc156fb-efff-4a42-8a55-401295daff03
+2026-07-04 22:46:00.776 | INFO    | app.middleware.logging:dispatch:26 | Request completed | GET /docs | status=200 | time=0.005s | id=2cc156fb-efff-4a42-8a55-401295daff03
+2026-07-04 22:46:03.815 | INFO    | app.middleware.logging:dispatch:16 | Request started | GET /docs | id=e344ff84-8241-4994-83b6-7120a50a0dc4
+2026-07-04 22:46:03.815 | INFO    | app.middleware.logging:dispatch:26 | Request completed | GET /docs | status=200 | time=0.000s | id=e344ff84-8241-4994-83b6-7120a50a0dc4
+2026-07-04 22:46:03.901 | INFO    | app.middleware.logging:dispatch:16 | Request started | GET /openapi.json | id=b0bb32db-6ebf-41bd-afa0-5001050c56a6
+2026-07-04 22:46:03.969 | INFO    | app.middleware.logging:dispatch:26 | Request completed | GET /openapi.json | status=200 | time=0.068s | id=b0bb32db-6ebf-41bd-afa0-5001050c56a6
+2026-07-04 22:47:29.602 | INFO    | app.middleware.logging:dispatch:16 | Request started | GET /docs | id=989ecde6-8d23-42f1-9b3f-67cc7807927f
+2026-07-04 22:47:29.604 | INFO    | app.middleware.logging:dispatch:26 | Request completed | GET /docs | status=200 | time=0.002s | id=989ecde6-8d23-42f1-9b3f-67cc7807927f
+2026-07-04 22:47:29.716 | INFO    | app.middleware.logging:dispatch:16 | Request started | GET /openapi.json | id=ed4de2fe-a6ea-4735-beb1-47c2f712ed7b
+2026-07-04 22:47:29.718 | INFO    | app.middleware.logging:dispatch:26 | Request completed | GET /openapi.json | status=200 | time=0.002s | id=ed4de2fe-a6ea-4735-beb1-47c2f712ed7b
+2026-07-04 23:07:55.736 | INFO    | app.main:lifespan:29 | Shutting down application
+2026-07-04 23:09:27.149 | INFO    | app.core.logging:setup_logging:50 | Logging configured
+2026-07-04 23:09:27.154 | INFO    | app.main:lifespan:25 | Starting FinanceCalculator API v1.0.0 in development mode
+2026-07-04 23:09:27.154 | WARNING | app.main:lifespan:27 | Running in development mode
+2026-07-04 23:15:37.608 | INFO    | app.main:lifespan:29 | Shutting down application
+2026-07-04 23:15:53.788 | INFO    | app.core.logging:setup_logging:50 | Logging configured
+2026-07-04 23:15:53.790 | INFO    | app.main:lifespan:25 | Starting FinanceCalculator API v1.0.0 in development mode
+2026-07-04 23:15:53.790 | WARNING | app.main:lifespan:27 | Running in development mode
+2026-07-04 23:21:24.234 | INFO    | app.main:lifespan:29 | Shutting down application

@@ -1,0 +1,39 @@
+# --- Core Application Dependencies ---
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+alembic
+pydantic
+pydantic-settings
+python-dotenv
+python-jose
+bcrypt
+email-validator
+python-multipart
+supabase
+httpx
+loguru
+slowapi
+orjson
+
+# --- Cache ---
+redis
+
+# --- Email ---
+jinja2
+aiosmtplib
+
+# --- Scheduler ---
+apscheduler
+
+# --- Monitoring ---
+sentry-sdk
+prometheus-fastapi-instrumentator
+
+# --- Developer & Testing Tools ---
+black
+isort
+flake8
+pytest
+pytest-asyncio
