@@ -7,7 +7,7 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session, sessionmaker
 
 os.environ["APP_ENV"] = "testing"
-os.environ["DATABASE_URL"] = "postgresql://localhost:5432/financecalculator_test"
+os.environ.setdefault("DATABASE_URL", "postgresql://localhost:5432/financecalculator_test")
 os.environ["SECRET_KEY"] = "test-secret-key"
 
 from app.database.base import Base

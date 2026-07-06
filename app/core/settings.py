@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
     refresh_token_expire_days: int = 7
 
-    database_url: str = "postgresql://localhost:5432/financecalculator"
+    database_url: str = ""
     database_name: str = "financecalculator"
     db_pool_size: int = 10
     db_max_overflow: int = 20
@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     default_locale: str = "en-US"
     default_timezone: str = "UTC"
 
-    redis_url: str = "redis://localhost:6379/0"
+    redis_url: str = ""
     cache_ttl_default: int = 300
     cache_ttl_long: int = 3600
     cache_prefix: str = "fc:"
