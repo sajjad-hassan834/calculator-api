@@ -2,13 +2,14 @@ from datetime import UTC, datetime
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel, ConfigDict
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.database.session import get_db
 from app.dependencies.auth import get_current_admin
 from app.exceptions import NotFoundException
 from app.models.auth import User
-from app.models.content import Category
+from app.models.content import Category, Calculator
 from app.schemas.common import paginated_response, success_response
 
 router = APIRouter(prefix="/categories", tags=["Admin - Categories"])
@@ -68,7 +69,15 @@ def list_categories(
     db: Session = Depends(get_db),
     admin: User = Depends(get_current_admin),
 ):
-    query = db.query(Category).filter(Category.deleted_at.is_(None))
+    query = (
+        db.query(
+            Category,
+            func.count(Calculator.id).label("calculator_count"),
+        )
+        .outerjoin(Calculator, Calculator.category_id == Category.id)
+        .filter(Category.deleted_at.is_(None))
+        .group_by(Category.id)
+    )
     if status is not None:
         query = query.filter(Category.status == status)
     if search:
@@ -79,9 +88,9 @@ def list_categories(
     ).limit(per_page).all()
 
     data = []
-    for c in items:
-        cat_data = CategoryResponse.model_validate(c).model_dump()
-        cat_data["calculator_count"] = len(c.calculators) if c.calculators else 0
+    for cat, calc_count in items:
+        cat_data = CategoryResponse.model_validate(cat).model_dump()
+        cat_data["calculator_count"] = calc_count
         data.append(cat_data)
 
     return paginated_response(
