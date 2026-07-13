@@ -147,7 +147,10 @@ def create_blog_post(
     db: Session = Depends(get_db),
     admin: User = Depends(get_current_admin),
 ):
-    post = BlogPost(**request.model_dump())
+    data = request.model_dump()
+    if data.get("is_published") and not data.get("published_at"):
+        data["published_at"] = datetime.now(UTC)
+    post = BlogPost(**data)
     db.add(post)
     db.commit()
     db.refresh(post)
@@ -168,6 +171,9 @@ def update_blog_post(
     if not post:
         raise NotFoundException("Blog post not found")
     update_data = request.model_dump(exclude_unset=True)
+    is_publishing = update_data.get("is_published") is True and not post.is_published
+    if is_publishing and not update_data.get("published_at"):
+        update_data["published_at"] = datetime.now(UTC)
     for key, value in update_data.items():
         setattr(post, key, value)
     db.commit()
