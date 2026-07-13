@@ -52,7 +52,7 @@ def list_featured_calculators(
         db.query(Calculator)
         .filter(
             Calculator.deleted_at.is_(None),
-            Calculator.is_published == True,
+            Calculator.status == "published",
             Calculator.is_active == True,
             Calculator.is_featured == True,
         )
@@ -73,7 +73,7 @@ def list_popular_calculators(
         db.query(Calculator)
         .filter(
             Calculator.deleted_at.is_(None),
-            Calculator.is_published == True,
+            Calculator.status == "published",
             Calculator.is_active == True,
         )
         .order_by(Calculator.view_count.desc(), Calculator.is_popular.desc())
@@ -95,7 +95,7 @@ def search_calculators(
         db.query(Calculator)
         .filter(
             Calculator.deleted_at.is_(None),
-            Calculator.is_published == True,
+            Calculator.status == "published",
             Calculator.is_active == True,
             Calculator.name.ilike(f"%{q}%"),
         )

@@ -21,7 +21,7 @@ def list_public_guides(
         db.query(Guide)
         .filter(
             Guide.deleted_at.is_(None),
-            Guide.is_published == True,
+            Guide.status == "published",
             Guide.is_active == True,
         )
     )
@@ -78,7 +78,7 @@ def get_public_guide(
         .filter(
             Guide.slug == slug,
             Guide.deleted_at.is_(None),
-            Guide.is_published == True,
+            Guide.status == "published",
             Guide.is_active == True,
         )
         .first()

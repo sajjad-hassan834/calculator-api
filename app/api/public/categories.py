@@ -74,7 +74,7 @@ def get_public_category(
         .filter(
             Calculator.category_id == category.id,
             Calculator.deleted_at.is_(None),
-            Calculator.is_published == True,
+            Calculator.status == 'published',
             Calculator.is_active == True,
         )
         .order_by(Calculator.sort_order.asc(), Calculator.name.asc())

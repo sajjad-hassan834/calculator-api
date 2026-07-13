@@ -22,7 +22,7 @@ def list_public_blog_posts(
         db.query(BlogPost)
         .filter(
             BlogPost.deleted_at.is_(None),
-            BlogPost.is_published == True,
+            BlogPost.status == "published",
             BlogPost.is_active == True,
         )
     )
@@ -80,7 +80,7 @@ def get_public_blog_post(
         .filter(
             BlogPost.slug == slug,
             BlogPost.deleted_at.is_(None),
-            BlogPost.is_published == True,
+            BlogPost.status == "published",
             BlogPost.is_active == True,
         )
         .first()
