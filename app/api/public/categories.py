@@ -25,7 +25,7 @@ def list_public_categories(
             Category.deleted_at.is_(None),
             Category.is_active == True,
             Calculator.deleted_at.is_(None),
-            Calculator.is_published == True,
+            Calculator.status == 'published',
         )
         .group_by(Category.id)
         .order_by(Category.sort_order.asc(), Category.name.asc())
