@@ -69,28 +69,27 @@ def list_categories(
     db: Session = Depends(get_db),
     admin: User = Depends(get_current_admin),
 ):
-    query = (
+    base_filter = [Category.deleted_at.is_(None)]
+    if status is not None:
+        base_filter.append(Category.status == status)
+    if search:
+        base_filter.append(Category.name.ilike(f"%{search}%"))
+
+    total = db.query(func.count(func.distinct(Category.id))).filter(*base_filter).scalar() or 0
+
+    items = (
         db.query(
             Category,
             func.count(Calculator.id).label("calculator_count"),
         )
         .outerjoin(Calculator, Calculator.category_id == Category.id)
-        .filter(Category.deleted_at.is_(None))
+        .filter(*base_filter)
         .group_by(Category.id)
+        .order_by(Category.sort_order.asc(), Category.created_at.desc())
+        .offset((page - 1) * per_page)
+        .limit(per_page)
+        .all()
     )
-    if status is not None:
-        query = query.filter(Category.status == status)
-    if search:
-        query = query.filter(Category.name.ilike(f"%{search}%"))
-    count_query = db.query(Category).filter(Category.deleted_at.is_(None))
-    if status is not None:
-        count_query = count_query.filter(Category.status == status)
-    if search:
-        count_query = count_query.filter(Category.name.ilike(f"%{search}%"))
-    total = count_query.count()
-    items = query.order_by(Category.sort_order.asc(), Category.created_at.desc()).offset(
-        (page - 1) * per_page
-    ).limit(per_page).all()
 
     data = []
     for cat, calc_count in items:
