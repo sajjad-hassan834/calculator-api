@@ -76,3 +76,6 @@
 2026-07-13 17:29:31.266 | INFO    | app.core.logging:setup_logging:50 | Logging configured
 2026-07-13 17:29:31.266 | INFO    | app.main:lifespan:31 | Starting FinanceCalculator API v1.0.0 in development mode
 2026-07-13 17:29:31.266 | WARNING | app.main:lifespan:33 | Running in development mode
+2026-07-13 17:48:45.551 | INFO    | app.core.logging:setup_logging:50 | Logging configured
+2026-07-13 17:48:45.561 | INFO    | app.main:lifespan:31 | Starting FinanceCalculator API v1.0.0 in development mode
+2026-07-13 17:48:45.561 | WARNING | app.main:lifespan:33 | Running in development mode
