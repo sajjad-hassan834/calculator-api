@@ -27,6 +27,8 @@ from app.models.content import (
     BlogPost,
     BlogSection,
     BlogCalculator,
+    GlossaryTerm,
+    FAQ,
 )
 from app.models.seo import (
     SEOMetadata,
@@ -98,6 +100,8 @@ __all__ = [
     "BlogPost",
     "BlogSection",
     "BlogCalculator",
+    "GlossaryTerm",
+    "FAQ",
     "SEOMetadata",
     "Redirect",
     "Sitemap",

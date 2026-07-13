@@ -429,6 +429,32 @@ class BlogSection(UUIDMixin, TimestampMixin, SortOrderMixin, BaseModel):
     blog_post = relationship("BlogPost", back_populates="sections")
 
 
+class GlossaryTerm(UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, SortOrderMixin, BaseModel):
+    __tablename__ = "glossary_terms"
+
+    term: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+    slug: Mapped[str] = mapped_column(String(500), nullable=False, unique=True, index=True)
+    definition: Mapped[str] = mapped_column(Text, nullable=False)
+    category: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    related_terms: Mapped[list | None] = mapped_column(ARRAY(String(255)), nullable=True)
+    seo_metadata_id: Mapped[str | None] = mapped_column(
+        UUID(as_uuid=False), ForeignKey("seo_metadata.id", ondelete="SET NULL"), nullable=True
+    )
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    status: Mapped[str] = mapped_column(String(50), nullable=False, default="published")
+
+
+class FAQ(UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, SortOrderMixin, BaseModel):
+    __tablename__ = "faqs"
+
+    question: Mapped[str] = mapped_column(Text, nullable=False)
+    answer: Mapped[str] = mapped_column(Text, nullable=False)
+    category: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    is_featured: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    status: Mapped[str] = mapped_column(String(50), nullable=False, default="published")
+
+
 class BlogCalculator(UUIDMixin, TimestampMixin, SortOrderMixin, BaseModel):
     __tablename__ = "blog_calculators"
 

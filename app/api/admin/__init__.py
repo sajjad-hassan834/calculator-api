@@ -14,6 +14,8 @@ from app.api.admin.reviewers import router as admin_reviewers_router
 from app.api.admin.seed import router as seed_router
 from app.api.admin.seo import router as admin_seo_router
 from app.api.admin.settings import router as admin_settings_router
+from app.api.admin.glossary import router as admin_glossary_router
+from app.api.admin.faqs import router as admin_faqs_router
 
 admin_router = APIRouter(prefix="/admin")
 admin_router.include_router(admin_analytics_router)
@@ -30,5 +32,7 @@ admin_router.include_router(admin_reviewers_router)
 admin_router.include_router(seed_router)
 admin_router.include_router(admin_seo_router)
 admin_router.include_router(admin_settings_router)
+admin_router.include_router(admin_glossary_router)
+admin_router.include_router(admin_faqs_router)
 
 __all__ = ["admin_router"]
