@@ -77,14 +77,20 @@ def list_categories(
 
     total = db.query(func.count(func.distinct(Category.id))).filter(*base_filter).scalar() or 0
 
+    calc_count_subq = (
+        db.query(func.count(Calculator.id))
+        .filter(Calculator.category_id == Category.id)
+        .filter(Calculator.deleted_at.is_(None))
+        .correlate(Category)
+        .scalar_subquery()
+    )
+
     items = (
         db.query(
             Category,
-            func.count(Calculator.id).label("calculator_count"),
+            calc_count_subq.label("calculator_count"),
         )
-        .outerjoin(Calculator, Calculator.category_id == Category.id)
         .filter(*base_filter)
-        .group_by(Category.id)
         .order_by(Category.sort_order.asc(), Category.created_at.desc())
         .offset((page - 1) * per_page)
         .limit(per_page)
