@@ -30,7 +30,12 @@ class Settings(BaseSettings):
     supabase_service_key: str = ""
 
     allowed_hosts: list[str] = ["*"]
-    cors_origins: list[str] = ["*"]
+    cors_origins: list[str] = [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "https://calculator-adminapp.vercel.app",
+        "https://calculator-app-chi-five.vercel.app"
+    ]
     rate_limit_per_minute: int = 60
     rate_limit_per_minute_public: int = 120
 
