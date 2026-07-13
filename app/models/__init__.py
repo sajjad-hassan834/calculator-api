@@ -63,6 +63,7 @@ from app.models.analytics import (
     PopularCalculator,
 )
 from app.models.audit import AuditLog
+import app.models.calculator  # noqa: F401 — re-exports calculator schemas for backward compatibility
 from app.models.future import (
     Bookmark,
     SavedCalculation,
