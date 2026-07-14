@@ -119,3 +119,13 @@ class CalculatorUsageTrackerPayload(BaseModel):
     calculator_slug: str
     session_id: str | None = None
     time_on_page: int | None = None
+
+
+class KeywordPoolBase(BaseSchema):
+    keyword: str
+    hub_id: int | None = None
+    intent: str | None = None
+
+
+class KeywordPoolResponse(KeywordPoolBase):
+    id: int

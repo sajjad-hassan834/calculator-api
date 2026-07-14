@@ -78,3 +78,13 @@ class PopularCalculator(UUIDMixin, TimestampMixin, BaseModel):
     last_calculated_at: Mapped[datetime] = mapped_column(nullable=False, default=lambda: datetime.now(UTC))
 
     calculator = relationship("Calculator")
+
+
+class KeywordPool(BaseModel):
+    __tablename__ = "keyword_pool"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    keyword: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
+    hub_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    intent: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(nullable=False, default=lambda: datetime.now(UTC))

@@ -139,7 +139,10 @@ def get_discovered_keywords(
         keywords = [{"id": r[0], "keyword": r[1], "hub_id": r[2], "intent": r[3]} for r in result]
         return {"success": True, "message": "Keywords retrieved successfully", "data": keywords}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Database query failed: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Database relation lookup failed. Check if keyword_pool exists in this target DB. Error: {str(e)}",
+        )
 
 
 @router.get("/{slug}", response_model=dict)

@@ -61,6 +61,7 @@ from app.models.analytics import (
     PageView,
     SearchHistory,
     PopularCalculator,
+    KeywordPool,
 )
 from app.models.audit import AuditLog
 import app.models.calculator  # noqa: F401 — re-exports calculator schemas for backward compatibility
@@ -125,6 +126,7 @@ __all__ = [
     "PageView",
     "SearchHistory",
     "PopularCalculator",
+    "KeywordPool",
     "AuditLog",
     "Bookmark",
     "SavedCalculation",
