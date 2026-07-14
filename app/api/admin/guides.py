@@ -10,13 +10,15 @@ from app.exceptions import NotFoundException
 from app.models.auth import User
 from app.models.content import Guide
 from app.schemas.common import paginated_response, success_response
+from app.utils.slug import generate_slug
 
 router = APIRouter(prefix="/guides", tags=["Admin - Guides"])
 
 
 class GuideCreate(BaseModel):
     title: str
-    slug: str
+    slug: str | None = None
+    word_count: int | None = None
     category_id: str | None = None
     author_id: str | None = None
     reviewer_id: str | None = None
@@ -38,6 +40,7 @@ class GuideCreate(BaseModel):
 class GuideUpdate(BaseModel):
     title: str | None = None
     slug: str | None = None
+    word_count: int | None = None
     category_id: str | None = None
     author_id: str | None = None
     reviewer_id: str | None = None
@@ -134,7 +137,10 @@ def create_guide(
     db: Session = Depends(get_db),
     admin: User = Depends(get_current_admin),
 ):
-    guide = Guide(**request.model_dump())
+    data = request.model_dump(exclude_unset=True)
+    if not data.get("slug"):
+        data["slug"] = generate_slug(data.get("title", ""), Guide, db)
+    guide = Guide(**data)
     db.add(guide)
     db.commit()
     db.refresh(guide)

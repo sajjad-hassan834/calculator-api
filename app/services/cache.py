@@ -15,6 +15,9 @@ def get_cache() -> RedisClient | None:
     global _client
     if _client is None:
         try:
+            if not settings.redis_url:
+                logger.info("No Redis URL configured, caching disabled")
+                return None
             _client = RedisClient.from_url(
                 settings.redis_url,
                 decode_responses=True,
@@ -23,7 +26,7 @@ def get_cache() -> RedisClient | None:
             )
             _client.ping()
             logger.info("Redis cache connected")
-        except RedisError as e:
+        except (RedisError, ValueError) as e:
             logger.warning(f"Redis unavailable, caching disabled: {e}")
             _client = None
     return _client

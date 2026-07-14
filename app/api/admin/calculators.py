@@ -71,7 +71,7 @@ def create_calculator(
     admin: User = Depends(get_current_admin),
 ):
     service = CalculatorService(db)
-    calculator = service.create_calculator(request, author_id=admin.id)
+    calculator = service.create_calculator(request)
     return success_response(
         data=CalculatorResponse.model_validate(calculator).model_dump(),
         message="Calculator created successfully",
@@ -122,7 +122,7 @@ def duplicate_calculator(
     admin: User = Depends(get_current_admin),
 ):
     service = CalculatorService(db)
-    calculator = service.duplicate_calculator(id, author_id=admin.id)
+    calculator = service.duplicate_calculator(id)
     return success_response(
         data=CalculatorResponse.model_validate(calculator).model_dump(),
         message="Calculator duplicated successfully",

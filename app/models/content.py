@@ -309,6 +309,7 @@ class Guide(UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, SortOrderMix
     content: Mapped[str | None] = mapped_column(Text, nullable=True)
     cover_image_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     reading_time_minutes: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    word_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
     difficulty_level: Mapped[str | None] = mapped_column(String(50), nullable=True)
     is_featured: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)

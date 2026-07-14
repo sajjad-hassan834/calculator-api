@@ -13,6 +13,7 @@ def setup_cors(app: FastAPI) -> None:
     required_origins = [
         "http://localhost:3000",
         "http://localhost:5173",
+        "http://127.0.0.1:5173",
         "https://calculator-adminapp.vercel.app",
         "https://calculator-app-chi-five.vercel.app"
     ]

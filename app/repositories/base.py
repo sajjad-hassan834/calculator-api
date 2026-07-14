@@ -40,7 +40,7 @@ class BaseRepository(Generic[ModelType]):
                     query = query.filter(getattr(self.model, key) == value)
         if search and hasattr(self.model, "name"):
             query = query.filter(self.model.name.ilike(f"%{search}%"))
-        if order_by:
+        if order_by is not None:
             query = query.order_by(order_by)
         return query.offset(skip).limit(limit).all()
 
