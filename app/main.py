@@ -33,6 +33,7 @@ async def lifespan(app: FastAPI):
         logger.warning("Running in development mode")
     from app.database.connection import get_engine, get_session_local
     from app.database.base import Base
+    import app.models  # noqa: F401 — register all models with Base.metadata
     engine = get_engine()
     Base.metadata.create_all(bind=engine)
     logger.info("Database tables synchronized")
