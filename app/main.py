@@ -35,8 +35,20 @@ async def lifespan(app: FastAPI):
     from app.database.base import Base
     import app.models  # noqa: F401 — register all models with Base.metadata
     engine = get_engine()
-    Base.metadata.create_all(bind=engine)
-    logger.info("Database tables synchronized")
+
+    # Run schema migrations
+    try:
+        from alembic.config import Config
+        from alembic import command
+        alembic_cfg = Config("alembic.ini")
+        alembic_cfg.set_main_option("sqlalchemy.url", settings.database_url)
+        command.upgrade(alembic_cfg, "head")
+        logger.info("Alembic migrations applied")
+    except Exception as e:
+        logger.warning(f"Alembic migration failed ({e}), falling back to create_all")
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables synchronized via create_all")
+
     session_factory = get_session_local()
     db = session_factory()
     try:
