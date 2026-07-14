@@ -47,7 +47,7 @@ class Category(UUIDMixin, TimestampMixin, SoftDeleteMixin, SortOrderMixin, Statu
 
     parent = relationship("Category", remote_side="Category.id", back_populates="children")
     children = relationship("Category", back_populates="parent", lazy="selectin")
-    seo_metadata = relationship("SEOMetadata", lazy="joined")
+    seo_metadata = relationship("SEOMetadata", lazy="selectin")
     calculators = relationship("Calculator", back_populates="category", lazy="selectin")
     blog_posts = relationship("BlogPost", back_populates="category", lazy="selectin")
     guides = relationship("Guide", back_populates="category", lazy="selectin")
