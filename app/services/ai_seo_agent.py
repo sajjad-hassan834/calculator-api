@@ -15,7 +15,7 @@ class AISEOAgent:
         from app.core.settings import settings
         self.provider = "qwen"
         self.client = AsyncOpenAI(
-            api_key=settings.qwen_api_key,
+            api_key=settings.qwen_api_key or "DUMMY_KEY_PLEASE_SET_QWEN_API_KEY",
             base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
         )
         self.model = "qwen-turbo"
