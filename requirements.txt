@@ -17,6 +17,9 @@ loguru
 slowapi
 orjson
 
+# --- AI Agents ---
+openai
+
 # --- Cache ---
 redis
 
