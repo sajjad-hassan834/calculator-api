@@ -71,6 +71,28 @@ from app.models.future import (
     Notification,
     AIExplanation,
 )
+from app.models.subscription import (
+    SubscriptionPlan,
+    UserSubscription,
+    PaymentTransaction,
+    PlanFeature,
+    UsageRecord,
+    APIKey,
+)
+from app.models.ai_agent import (
+    AIResearchTask,
+    AIGeneratedContent,
+    ContentCalendar,
+    SEOAudit,
+    SEOKeyword,
+    AIAgentLog,
+)
+from app.models.affiliate import (
+    AffiliatePartner,
+    AffiliateLink,
+    AffiliateConversion,
+)
+
 
 __all__ = [
     "TimestampMixin",
@@ -132,4 +154,19 @@ __all__ = [
     "SavedCalculation",
     "Notification",
     "AIExplanation",
+    "SubscriptionPlan",
+    "UserSubscription",
+    "PaymentTransaction",
+    "PlanFeature",
+    "UsageRecord",
+    "APIKey",
+    "AIResearchTask",
+    "AIGeneratedContent",
+    "ContentCalendar",
+    "SEOAudit",
+    "SEOKeyword",
+    "AIAgentLog",
+    "AffiliatePartner",
+    "AffiliateLink",
+    "AffiliateConversion",
 ]

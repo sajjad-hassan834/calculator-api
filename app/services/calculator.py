@@ -70,6 +70,10 @@ class CalculatorService:
         
         dump["slug"] = self._generate_unique_slug(dump["slug"])
         
+        if "status" in dump:
+            dump["is_published"] = dump["status"] == "published"
+            dump["is_active"] = dump["status"] == "published"
+
         if author_id and not dump.get("author_id"):
             dump["author_id"] = author_id
 
@@ -94,6 +98,10 @@ class CalculatorService:
         if "slug" in dump and dump["slug"] != calculator.slug:
             dump["slug"] = self._generate_unique_slug(dump["slug"])
 
+        if "status" in dump:
+            dump["is_published"] = dump["status"] == "published"
+            dump["is_active"] = dump["status"] == "published"
+
         if reviewer_id:
             dump["reviewer_id"] = reviewer_id
 
@@ -116,7 +124,7 @@ class CalculatorService:
         calculator = self.repo.get_by_slug(slug)
         if not calculator:
             raise NotFoundException("Calculator not found")
-        if public_only and not calculator.is_published:
+        if public_only and not (calculator.is_published or calculator.status == "published"):
             raise NotFoundException("Calculator not found")
         return calculator
 

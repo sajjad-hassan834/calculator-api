@@ -20,12 +20,15 @@ def list_public_categories(
             Category,
             func.count(Calculator.id).label("calculator_count"),
         )
-        .outerjoin(Calculator, Calculator.category_id == Category.id)
+        .outerjoin(
+            Calculator,
+            (Calculator.category_id == Category.id)
+            & (Calculator.deleted_at.is_(None))
+            & (Calculator.status == "published"),
+        )
         .filter(
             Category.deleted_at.is_(None),
             Category.is_active == True,
-            Calculator.deleted_at.is_(None),
-            Calculator.status == 'published',
         )
         .group_by(Category.id)
         .order_by(Category.sort_order.asc(), Category.name.asc())

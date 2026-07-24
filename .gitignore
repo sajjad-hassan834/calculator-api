@@ -5,3 +5,14 @@ __pycache__/
 .pytest_cache/
 .idea/
 .vscode/
+
+# Local Databases
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Uploads
+app/uploads/

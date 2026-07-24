@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from typing import Any
 
 from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel, ConfigDict
@@ -24,14 +25,14 @@ router = APIRouter(prefix="/settings", tags=["Admin - Settings"])
 
 class SiteSettingCreate(BaseModel):
     key: str
-    value: dict
+    value: Any
     description: str | None = None
     group: str = "general"
     is_public: bool = False
 
 
 class SiteSettingUpdate(BaseModel):
-    value: dict | None = None
+    value: Any | None = None
     description: str | None = None
     group: str | None = None
     is_public: bool | None = None
@@ -42,7 +43,7 @@ class SiteSettingResponse(BaseModel):
 
     id: str
     key: str
-    value: dict
+    value: Any
     description: str | None = None
     group: str | None = None
     is_public: bool

@@ -148,6 +148,15 @@ def create_blog_post(
     admin: User = Depends(get_current_admin),
 ):
     data = request.model_dump()
+    if data.get("slug"):
+        base_slug = data["slug"]
+        slug = base_slug
+        counter = 1
+        while db.query(BlogPost).filter(BlogPost.slug == slug).first():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+        data["slug"] = slug
+
     if data.get("is_published") and not data.get("published_at"):
         data["published_at"] = datetime.now(UTC)
     post = BlogPost(**data)
@@ -171,6 +180,15 @@ def update_blog_post(
     if not post:
         raise NotFoundException("Blog post not found")
     update_data = request.model_dump(exclude_unset=True)
+    if update_data.get("slug"):
+        base_slug = update_data["slug"]
+        slug = base_slug
+        counter = 1
+        while db.query(BlogPost).filter(BlogPost.slug == slug, BlogPost.id != post.id).first():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+        update_data["slug"] = slug
+
     is_publishing = update_data.get("is_published") is True and not post.is_published
     if is_publishing and not update_data.get("published_at"):
         update_data["published_at"] = datetime.now(UTC)

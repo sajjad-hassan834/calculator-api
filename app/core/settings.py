@@ -69,6 +69,29 @@ class Settings(BaseSettings):
     scheduler_enabled: bool = True
     scheduler_check_interval_seconds: int = 60
 
+    # AI Agent
+    gemini_api_key: str = ""
+    openai_api_key: str = ""
+    qwen_api_key: str = ""
+    ai_provider: str = "gemini"  # gemini | openai | qwen
+    ai_research_schedule: str = "0 6 * * *"  # Daily at 6 AM
+
+    # Payment Gateways
+    stripe_secret_key: str = ""
+    stripe_webhook_secret: str = ""
+    paypal_client_id: str = ""
+    paypal_client_secret: str = ""
+    razorpay_key_id: str = ""
+    razorpay_key_secret: str = ""
+    jazzcash_merchant_id: str = ""
+    jazzcash_password: str = ""
+    easypaisa_store_id: str = ""
+    easypaisa_token: str = ""
+
+    # Google AdSense
+    adsense_publisher_id: str = ""
+    adsense_enabled: bool = False
+
     @property
     def is_development(self) -> bool:
         return self.app_env == "development"

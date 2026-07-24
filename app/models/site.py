@@ -1,3 +1,5 @@
+from typing import Any
+
 from sqlalchemy import (
     BigInteger,
     Boolean,
@@ -128,7 +130,7 @@ class SiteSetting(UUIDMixin, TimestampMixin, AuditMixin, BaseModel):
     __tablename__ = "site_settings"
 
     key: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
-    value: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    value: Mapped[Any] = mapped_column(JSONB, nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     group: Mapped[str] = mapped_column(String(100), default="general", nullable=True)
     is_public: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)

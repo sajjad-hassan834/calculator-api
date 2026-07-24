@@ -115,8 +115,8 @@ class SearchTrackerPayload(BaseModel):
 
 
 class CalculatorUsageTrackerPayload(BaseModel):
-    calculator_id: str
-    calculator_slug: str
+    calculator_id: str | None = None
+    calculator_slug: str | None = None
     session_id: str | None = None
     time_on_page: int | None = None
 

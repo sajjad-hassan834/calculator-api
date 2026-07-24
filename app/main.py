@@ -53,7 +53,11 @@ async def lifespan(app: FastAPI):
     db = session_factory()
     try:
         from app.seeds.roles import seed_roles
+        from app.seeds.settings import seed_site_settings, seed_homepage_sections, seed_navigation_items
         seed_roles(db)
+        seed_site_settings(db)
+        seed_homepage_sections(db)
+        seed_navigation_items(db)
     finally:
         db.close()
     from app.services.cache import get_cache, close_cache
@@ -82,7 +86,7 @@ setup_cors(app)
 setup_security(app)
 app.add_middleware(LoggingMiddleware)
 
-uploads_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "uploads")
+uploads_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
 os.makedirs(uploads_dir, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
@@ -104,6 +108,7 @@ async def app_exception_handler(request: Request, exc: AppException):
             errors=exc.detail.get("errors", []),
             code=exc.detail.get("code", "APP_ERROR"),
         ),
+        headers={"Access-Control-Allow-Origin": request.headers.get("origin", "*"), "Access-Control-Allow-Credentials": "true"}
     )
 
 
@@ -117,10 +122,11 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     return JSONResponse(
         status_code=422,
         content=error_response(
-            message="Validation error",
+            message="Validation failed",
             errors=errors,
             code="VALIDATION_ERROR",
         ),
+        headers={"Access-Control-Allow-Origin": request.headers.get("origin", "*"), "Access-Control-Allow-Credentials": "true"}
     )
 
 
@@ -157,6 +163,7 @@ async def general_exception_handler(request: Request, exc: Exception):
             message="Internal server error",
             code="INTERNAL_ERROR",
         ),
+        headers={"Access-Control-Allow-Origin": request.headers.get("origin", "*"), "Access-Control-Allow-Credentials": "true"}
     )
 
 

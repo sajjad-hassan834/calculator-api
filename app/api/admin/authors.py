@@ -26,6 +26,8 @@ class AuthorCreate(BaseModel):
     bio: str | None = None
     website_url: str | None = None
     social_links: dict | None = None
+    designation: str | None = None
+    credentials: str | None = None
     expertise_areas: list[str] | None = None
     is_active: bool = True
     status: str | None = None
@@ -39,6 +41,8 @@ class AuthorUpdate(BaseModel):
     bio: str | None = None
     website_url: str | None = None
     social_links: dict | None = None
+    designation: str | None = None
+    credentials: str | None = None
     expertise_areas: list[str] | None = None
     is_active: bool | None = None
     status: str | None = None
@@ -50,14 +54,17 @@ class AuthorResponse(BaseModel):
 
     id: str
     name: str
-    slug: str
+    slug: str | None = None
     email: str | None = None
     bio: str | None = None
+    avatar_media_id: str | None = None
     website_url: str | None = None
     social_links: dict | None = None
+    designation: str | None = None
+    credentials: str | None = None
     expertise_areas: list[str] | None = None
     is_active: bool
-    status: str
+    status: str | None = None
     sort_order: int
     created_at: datetime
     updated_at: datetime
@@ -127,8 +134,10 @@ def create_author(
     db.add(author)
     db.commit()
     db.refresh(author)
+    d = AuthorResponse.model_validate(author).model_dump()
+    d["status"] = "active" if d["is_active"] else "inactive"
     return success_response(
-        data=AuthorResponse.model_validate(author).model_dump(),
+        data=d,
         message="Author created successfully",
     )
 
@@ -150,8 +159,10 @@ def update_author(
         setattr(author, key, value)
     db.commit()
     db.refresh(author)
+    d = AuthorResponse.model_validate(author).model_dump()
+    d["status"] = "active" if d["is_active"] else "inactive"
     return success_response(
-        data=AuthorResponse.model_validate(author).model_dump(),
+        data=d,
         message="Author updated successfully",
     )
 

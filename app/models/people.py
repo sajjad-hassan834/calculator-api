@@ -33,6 +33,8 @@ class Author(UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, SortOrderMi
     )
     website_url: Mapped[str | None] = mapped_column(Text, nullable=True)
     social_links: Mapped[dict | None] = mapped_column(JSONB, default=dict, nullable=True)
+    designation: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    credentials: Mapped[str | None] = mapped_column(String(255), nullable=True)
     expertise_areas: Mapped[list | None] = mapped_column(ARRAY(Text), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 

@@ -37,6 +37,10 @@ class User(UUIDMixin, TimestampMixin, SoftDeleteMixin, BaseModel):
     is_superadmin: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
+    @property
+    def is_admin(self) -> bool:
+        return self.is_superadmin
+
     profile = relationship("UserProfile", back_populates="user", uselist=False, lazy="joined")
     roles = relationship(
         "UserRole", back_populates="user", lazy="selectin", cascade="all, delete-orphan",

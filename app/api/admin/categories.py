@@ -129,7 +129,10 @@ def create_category(
     db: Session = Depends(get_db),
     admin: User = Depends(get_current_admin),
 ):
-    category = Category(**request.model_dump())
+    data = request.model_dump()
+    if "status" in data:
+        data["is_active"] = data["status"] == "published"
+    category = Category(**data)
     db.add(category)
     db.commit()
     db.refresh(category)
@@ -150,6 +153,8 @@ def update_category(
     if not category:
         raise NotFoundException("Category not found")
     update_data = request.model_dump(exclude_unset=True)
+    if "status" in update_data:
+        update_data["is_active"] = update_data["status"] == "published"
     for key, value in update_data.items():
         setattr(category, key, value)
     db.commit()

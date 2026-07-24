@@ -60,7 +60,7 @@ class ReviewerResponse(BaseModel):
     social_links: dict | None = None
     credentials: list[str] | None = None
     is_active: bool
-    status: str
+    status: str | None = None
     sort_order: int
     created_at: datetime
     updated_at: datetime
@@ -128,8 +128,10 @@ def create_reviewer(
     db.add(reviewer)
     db.commit()
     db.refresh(reviewer)
+    d = ReviewerResponse.model_validate(reviewer).model_dump()
+    d["status"] = "active" if d["is_active"] else "inactive"
     return success_response(
-        data=ReviewerResponse.model_validate(reviewer).model_dump(),
+        data=d,
         message="Reviewer created successfully",
     )
 
@@ -151,8 +153,10 @@ def update_reviewer(
         setattr(reviewer, key, value)
     db.commit()
     db.refresh(reviewer)
+    d = ReviewerResponse.model_validate(reviewer).model_dump()
+    d["status"] = "active" if d["is_active"] else "inactive"
     return success_response(
-        data=ReviewerResponse.model_validate(reviewer).model_dump(),
+        data=d,
         message="Reviewer updated successfully",
     )
 
